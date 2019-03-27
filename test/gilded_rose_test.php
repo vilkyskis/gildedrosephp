@@ -1,6 +1,6 @@
 <?php
 
-require_once '../src/gilded_rose.php';
+require_once 'src/gilded_rose.php';
 require_once 'PHPUnit/Autoload.php';
 
 class GildedRoseTest extends \PHPUnit\Framework\TestCase {

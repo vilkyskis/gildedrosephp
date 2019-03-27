@@ -9,8 +9,11 @@ class GildedRose {
     }
 
     function update_quality() {
+        // TODO extract to method
         foreach ($this->items as $item) {
             // if is not aged and backpass then if quality si good and if not Sulfuras Qual --
+            // TODO Extract to method
+
             if ($item->name != 'Aged Brie' and $item->name != 'Backstage passes to a TAFKAL80ETC concert') {
                 if ($item->quality > 0) {
                     if ($item->name != 'Sulfuras, Hand of Ragnaros') {
@@ -36,8 +39,12 @@ class GildedRose {
             }
             
             // all not sulfuras sellin -- 
-            decreaseSellIn();
+            // TODO Comment on this work
+            $this->decreaseSellIn($item);
             
+
+            // TODO Comment what this do
+            // TODO Extract to method
             if ($item->sell_in < 0) {
                 if ($item->name != 'Aged Brie') {
                     if ($item->name != 'Backstage passes to a TAFKAL80ETC concert') {
@@ -54,7 +61,8 @@ class GildedRose {
                         $item->quality = $item->quality + 1;
                     }
                 }
-            }
+            }   
+            // TODO Add conjured item.
         }
     }
 
@@ -62,6 +70,7 @@ class GildedRose {
         if ($item->name != 'Sulfuras, Hand of Ragnaros') {
             $item->sell_in = $item->sell_in - 1;
         }
+        // return to check
         return $item;
     }
 }
