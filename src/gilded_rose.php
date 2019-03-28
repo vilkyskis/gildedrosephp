@@ -13,30 +13,11 @@ class GildedRose {
         foreach ($this->items as $item) {
             // if is not aged and backpass then if quality si good and if not Sulfuras Qual --
             // TODO Extract to method
-
-            if ($item->name != 'Aged Brie' and $item->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                if ($item->quality > 0) {
-                    if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                        $item->quality = $item->quality - 1;
-                    }
-                }
-            } else {
-                if ($item->quality < 50) {
-                    $item->quality = $item->quality + 1;
-                    if ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
-                        if ($item->sell_in < 11) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
-                        }
-                        if ($item->sell_in < 6) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
-                        }
-                    }
-                }
-            }
+            // TODO Add conjured
+            $this->decreaseQualityOfNotAgedBackpassOrSulfuras($item);
+            
+            // increase quality of Aged and Backpass
+            $this->increaseQualityOfAgedAndBackpass($item);
             
             // all not sulfuras sellin -- 
             // TODO Comment on this work
@@ -44,33 +25,69 @@ class GildedRose {
             
 
             // TODO Comment what this do
+            // 1)jei sell in mazesne uz nuli ir vardas nelygus Aged tada jei vardas nelygus back ir kokybe didesne uz 0
+            // ir jei vardas nelygus sulfuras, tada maziname kokybe
+            // 2)kitu atveju kokybe lygu kokybe-kokybe
             // TODO Extract to method
             if ($item->sell_in < 0) {
-                if ($item->name != 'Aged Brie') {
-                    if ($item->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                        if ($item->quality > 0) {
-                            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                                $item->quality = $item->quality - 1;
-                            }
-                        }
-                    } else {
-                        $item->quality = $item->quality - $item->quality;
-                    }
-                } else {
-                    if ($item->quality < 50) {
-                        $item->quality = $item->quality + 1;
-                    }
-                }
+                //Jei aged tai kokybe tik dideja 
+                $this->increaseQualityOfAgedAndBackpass($item);
+                //degrades twice as fast
+                $this->decreaseQualityOfNotAgedBackpassOrSulfuras($item);
+                
             }   
+            $this->decreaseQualityOfConjuredItem($item);
             // TODO Add conjured item.
         }
     }
 
     function decreaseSellIn($item){
+        $primary = $item;
         if ($item->name != 'Sulfuras, Hand of Ragnaros') {
             $item->sell_in = $item->sell_in - 1;
         }
         // return to check
+        return ($primary->sell_in === $item->sell_in);
+    }
+
+    function decreaseQualityOfConjuredItem($item){
+        if ($item->name == 'Conjured Mana Cake') {
+            if($item->quality>0)
+                $item->quality = $item->quality - 1;
+        }
+        return $item;
+    }
+    function increaseQualityOfAgedAndBackpass($item){
+        if (($item->name == 'Aged Brie') || ($item->name == 'Backstage passes to a TAFKAL80ETC concert')){
+            if ($item->quality < 50) {
+                $item->quality = $item->quality + 1;
+                if ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
+                    if ($item->sell_in < 11) {
+                        if ($item->quality < 50) {
+                            $item->quality = $item->quality + 1;
+                        }
+                    }
+                    if ($item->sell_in < 6) {
+                        if ($item->quality < 50) {
+                            $item->quality = $item->quality + 1;
+                        }
+                    }
+                    if ($item->sell_in < 0) {
+                        $item->quality = $item->quality - $item->quality;
+                    }
+                }
+            }
+        }
+        return $item;
+    }
+    function decreaseQualityOfNotAgedBackpassOrSulfuras($item){
+        if ($item->name != 'Aged Brie' and $item->name != 'Backstage passes to a TAFKAL80ETC concert') {
+            if ($item->quality > 0) {
+                if ($item->name != 'Sulfuras, Hand of Ragnaros') {
+                    $item->quality = $item->quality - 1;
+                }
+            }
+        } 
         return $item;
     }
 }
