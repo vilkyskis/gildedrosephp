@@ -29,13 +29,7 @@ class GildedRose {
             // ir jei vardas nelygus sulfuras, tada maziname kokybe
             // 2)kitu atveju kokybe lygu kokybe-kokybe
             // TODO Extract to method
-            if ($item->sell_in < 0) {
-                //Jei aged tai kokybe tik dideja 
-                $this->increaseQualityOfAgedAndBackpass($item);
-                //degrades twice as fast
-                $this->decreaseQualityOfNotAgedBackpassOrSulfuras($item);
-                
-            }   
+           
             $this->decreaseQualityOfConjuredItem($item);
             // TODO Add conjured item.
         }
@@ -61,20 +55,20 @@ class GildedRose {
         if (($item->name == 'Aged Brie') || ($item->name == 'Backstage passes to a TAFKAL80ETC concert')){
             if ($item->quality < 50) {
                 $item->quality = $item->quality + 1;
-                if ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
-                    if ($item->sell_in < 11) {
-                        if ($item->quality < 50) {
-                            $item->quality = $item->quality + 1;
-                        }
+            }
+            if ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
+                if ($item->sell_in < 11) {
+                    if ($item->quality < 50) {
+                        $item->quality = $item->quality + 1;
                     }
-                    if ($item->sell_in < 6) {
-                        if ($item->quality < 50) {
-                            $item->quality = $item->quality + 1;
-                        }
+                }
+                if ($item->sell_in < 6) {
+                    if ($item->quality < 50) {
+                        $item->quality = $item->quality + 1;
                     }
-                    if ($item->sell_in < 0) {
-                        $item->quality = $item->quality - $item->quality;
-                    }
+                }
+                if ($item->sell_in < 0) {
+                    $item->quality = 0;
                 }
             }
         }
