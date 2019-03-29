@@ -9,29 +9,18 @@ class GildedRose {
     }
 
     function update_quality() {
-        // TODO extract to method
         foreach ($this->items as $item) {
-            // if is not aged and backpass then if quality si good and if not Sulfuras Qual --
-            // TODO Extract to method
-            // TODO Add conjured
+            // if is not aged and backpass then if quality is good and if not Sulfuras Quality -1
             $this->decreaseQualityOfNotAgedBackpassOrSulfuras($item);
             
             // increase quality of Aged and Backpass
             $this->increaseQualityOfAgedAndBackpass($item);
             
             // all not sulfuras sellin -- 
-            // TODO Comment on this work
             $this->decreaseSellIn($item);
-            
 
-            // TODO Comment what this do
-            // 1)jei sell in mazesne uz nuli ir vardas nelygus Aged tada jei vardas nelygus back ir kokybe didesne uz 0
-            // ir jei vardas nelygus sulfuras, tada maziname kokybe
-            // 2)kitu atveju kokybe lygu kokybe-kokybe
-            // TODO Extract to method
-           
+            // Decrease quality of Conjured twice as much
             $this->decreaseQualityOfConjuredItem($item);
-            // TODO Add conjured item.
         }
     }
 

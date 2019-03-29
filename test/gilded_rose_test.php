@@ -14,7 +14,6 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase {
         new Item('Backstage passes to a TAFKAL80ETC concert', 15, 20),
         new Item('Backstage passes to a TAFKAL80ETC concert', 10, 49),
         new Item('Backstage passes to a TAFKAL80ETC concert', 5, 49),
-        // this conjured item does not work properly yet
         //"Conjured" items degrade in Quality twice as fast as normal items
         new Item('Conjured Mana Cake', 3, 6));
         return $items;
@@ -28,9 +27,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase {
         new Item('Sulfuras, Hand of Ragnaros', -1, 80),
         new Item('Backstage passes to a TAFKAL80ETC concert', 13, 22),
         new Item('Backstage passes to a TAFKAL80ETC concert', 8, 50),
-        new Item('Backstage passes to a TAFKAL80ETC concert', 3, 50),
-        // this conjured item does not work properly yet
-        
+        new Item('Backstage passes to a TAFKAL80ETC concert', 3, 50),        
         new Item('Conjured Mana Cake', 1, 2));
         return $items;
     }
